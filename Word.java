@@ -1,50 +1,59 @@
+import org.w3c.dom.Text;
+
 import doodlepad.*;
 
 public class Word
 {
 	int id, diff, xPos, yPos;
 	String phrase;
-	Rectangle block;
+	RoundRect block;
 	Text display;
-	boolean selected = false;
+	boolean selectThis = false;
+	public int[][] colors = {{243,230,105},{100,186,78},{111,166,255},{158,90,201}, {223,223,223}, {190,190,190}};
+
 	
-	public Word(String phrase, int diff, int xPos, int yPos, int id)
+	public Word(String inphrase, int indiff, int inxPos, int inyPos, int inid)
 	{
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.diff = diff;
-		this.id = id;
-		this.phrase = phrase;
+		this.xPos = inxPos;
+		this.yPos = inyPos;
+		this.diff = indiff;
+		this.id = inid;
+		this.phrase = inphrase;
 		
-		block = new Rectangle(xPos, yPos, 400, 190);
+		block = new RoundRect(inxPos, inyPos, 400, 190, 15, 15);
 		block.setFillColor(Main.colors[4][0]);
+		block.setStrokeWidth(0);
+		System.out.println("created blcok " + id);
 		block.setMousePressedHandler(this::onPressed);
 		
 		display = new Text(phrase, xPos+20, yPos+20, 15);
 		display.setMousePressedHandler(this::onPressed);
 		
-		System.out.println(id + " built at" + xPos + " and" + yPos);
+		System.out.println(id + " built at" + inxPos + " and" + inyPos);
 	}
 	
     public void onPressed(Shape shp, double x, double y, int button) {
-        if (selected) 
+        if (selectThis) 
         {
             block.setFillColor(Main.colors[4][0]);
             for (int d = 0; d < 4; d++)
             {
 				if (Main.selected.get(d).equals(this))
 				{
-					Main.selected.remove(d);
+					Main.selected.remove(d);			
+					System.out.println(this.id + "deselected");
+
 					break;
 				}
             }
-            selected = false;
+            selectThis = false;
         } 
-        else if (Main.selected.size() < 4)
+        else if (Main.selected.size() < 4) 
         {
 			Main.selected.add(this);
 			block.setFillColor(Main.colors[5][0]);
-			selected = true;
+			selectThis = true;
+			System.out.println(this.id + "selected");
 		}
 	}
 	public int getDiff()
