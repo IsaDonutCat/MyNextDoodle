@@ -6,7 +6,7 @@ public class Main {
 	static Pad board = new Pad(1920, 1080);
 	
 	//references
-	static String[] words = {"a","b","c","d",  "e","f","g","h",  "j","k","l","m",  "n","o","p", "q"}; 
+	static String[] words = {"aA","b","c","d",  "e","f","g","h",  "j","k","l","m",  "n","o","p", "q", "r"}; 
 	static int[] xPos = {130, 550, 970, 1390}; //outside margins 130, between gaps 20, block width 400
 	static int[] yPos = {0, 210, 420, 630}; //outside margines 130, between gaps, 20, block height 190
 	public static int[][] colors = {{243,230,105},{100,186,78},{111,166,255},{158,90,201}, {223,223,223}, {190,190,190}};
@@ -41,9 +41,9 @@ public class Main {
 			}
 		}
 		
-		for (int c = 0; c < 16; c++)
+		for (int c = 1; c <= 16; c++)
 		{
-			int ranInd  = (int) (Math.random() * xYPos.size());
+			int ranInd  = (int)(Math.random() * xYPos.size());
 			choices.add(new Word(words[c], c/4, xYPos.get(ranInd)[0], xYPos.get(ranInd)[1], c));
 			xYPos.remove(ranInd);
 		}
